@@ -1,7 +1,8 @@
 import readlineSync from 'readline-sync';
 
-export const evenGame = () => {
+const evenGame = () => {
 const sayHello = () => {
+    console.log("Welcome to the Brain Games!");
     const name = readlineSync.question('May I have your name? ');
     console.log(`Hello, ${name}! \nAnswer "yes" if the number is even, otherwise answer "no".`);
     return name;
@@ -26,20 +27,23 @@ const isEven = (num) => {
 const question = () => {
     let randomNum = getRandomInt(1, 16);
     const answer = readlineSync.question(`Question: ${randomNum}\nYour answer: `);
-    return [randomNum, answer];
+    const questResult = [randomNum, answer];
+    return questResult;
 };
 
-const game = () => {
-    let wins = 0;
-    question();
-    if (isEven(randomNum) !== answer) {
-        console.log(`${answer} is wrong answer ;(. Correct answer was ${isEven(randomNum)}.\nLet's try again, ${name}!`)
-    } else if (isEven(randomNum) === answer && wins < 3) {
+const game = (wins) => {
+    let questRes = question();
+    if (isEven(questRes[0]) !== questRes[1]) {
+        console.log(`${questRes[1]} is wrong answer ;(. Correct answer was ${isEven(questRes[0])}.\nLet's try again, ${name}!`)
+    } else if (isEven(questRes[0]) === questRes[1] && wins < 2) {
         console.log(`Correct!`);
         wins += 1;
-        game();
-    } else {
+        game(wins);
+    } else if (isEven(questRes[0]) === questRes[1] && wins === 2) {
         console.log(`Congratulations, ${name}!`);
     }
 };
+game(0);
 };
+
+export default evenGame;
